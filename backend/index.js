@@ -1,10 +1,17 @@
 import express from 'express'
-import { port } from './config.js'
+import { PORT, ATLAS_URI } from './config.js'
+import mongoose from 'mongoose'
 
 const app = express()
 
 app.get('/', (req, res) => res.status(234).send('Welcome To MERN Stack Tutorial'))
 
-app.listen(port, () => {
-  console.log(`Express server is running on http://localhost:${port}`)
-})
+mongoose
+  .connect(ATLAS_URI)
+  .then(() => {
+    console.log('App connected to database')
+    app.listen(PORT, () => {
+      console.log(`App is listening on http://localhost:${PORT}`)
+    })
+  })
+  .catch(err => console.err(err))
