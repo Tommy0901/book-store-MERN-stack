@@ -34,6 +34,16 @@ app.get('/books', async (req, res) => {
   }
 })
 
+app.get('/books/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    res.status(200).json(await Book.findById(id))
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).json({ message: err.message })
+  }
+})
+
 mongoose
   .connect(ATLAS_URI)
   .then(() => {
