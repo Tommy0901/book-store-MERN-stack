@@ -12,11 +12,25 @@ app.get('/', (req, res) => res.status(234).send('Welcome To MERN Stack Tutorial'
 app.post('/books', async (req, res) => {
   try {
     const { body: { title, author, publishYear } } = req
-    if (!title || !author || !publishYear) return res.status(401).send({ message: 'Send all required fields: title, author, publishYear' })
-    return res.status(201).send(await Book.create({ title, author, publishYear }))
+    const ifCond = !title || !author || !publishYear
+    if (ifCond) return res.status(401).send({ message: 'Send all required fields: title, author, publishYear' })
+    res.status(201).json(await Book.create({ title, author, publishYear }))
   } catch (err) {
     console.log(err.message)
-    res.status(500).send({ message: err.message })
+    res.status(500).json({ message: err.message })
+  }
+})
+
+app.get('/books', async (req, res) => {
+  try {
+    const data = await Book.find()
+    res.status(200).json({
+      count: data.length,
+      data
+    })
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).json({ message: err.message })
   }
 })
 
