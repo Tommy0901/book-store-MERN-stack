@@ -15,12 +15,12 @@ const Home = () => {
     setLoading(true);
     axios
       .get(backend_url)
-      .then((response) => {
-        setBooks(response.data.data);
+      .then((res) => {
+        setBooks(res.data.data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
         setLoading(false);
       });
   }, []);
