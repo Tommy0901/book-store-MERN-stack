@@ -6,13 +6,13 @@ import booksRoute from './routes/booksRoute.js'
 
 const app = express()
 
-const corsOptions = {
-  origin: 'http://localhost:4000',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type']
-}
+// const corsOptions = {
+//   origin: 'http://localhost:4000',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type']
+// }
 
-app.use(cors(corsOptions), express.json())
+app.use(cors(), express.json())
 
 app.use('/books', booksRoute)
 
