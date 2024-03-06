@@ -1,11 +1,18 @@
 import express from 'express'
-import { PORT, ATLAS_URI } from './config.js'
 import mongoose from 'mongoose'
+import cors from 'cors'
+import { PORT, ATLAS_URI } from './config.js'
 import booksRoute from './routes/booksRoute.js'
 
 const app = express()
 
-app.use(express.json())
+const corsOptions = {
+  origin: 'http://localhost:4000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type']
+}
+
+app.use(cors(corsOptions), express.json())
 
 app.use('/books', booksRoute)
 
