@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSnackbar } from "notistack";
 import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
 
@@ -13,6 +14,8 @@ export const EditBook = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -25,7 +28,8 @@ export const EditBook = () => {
       })
       .catch((err) => {
         setLoading(false);
-        alert("An error happened. Please Check console");
+        // alert("An error happened. Please Check console");
+        enqueueSnackbar("Error", { variant: "error" });
         console.log(err);
       });
   }, []);
@@ -35,11 +39,13 @@ export const EditBook = () => {
       .put(backend_url + `/${id}`, { title, author, publishYear })
       .then(() => {
         setLoading(false);
+        enqueueSnackbar("Book Edited successfully", { variant: "success" });
         navigate("/");
       })
       .catch((err) => {
         setLoading(false);
-        alert("An error happened. Please Check console");
+        // alert("An error happened. Please Check console");
+        enqueueSnackbar("Error", { variant: "error" });
         console.log(err);
       });
   };
@@ -85,4 +91,4 @@ export const EditBook = () => {
   );
 };
 
-export default EditBook
+export default EditBook;
